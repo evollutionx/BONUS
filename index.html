@@ -25,17 +25,26 @@
             // Cálculo do bônus ajustado pela frequência
             const bonusFinal = (bonusTotal * frequencia) / 100;
 
-            // Descontar o imposto de renda
+            // Determinar o imposto de renda com base na faixa do bônus final
             let impostoRenda = 0;
+            let aliquota = 0;
 
-            if (bonusFinal > 3751.05) {
-                impostoRenda = (bonusFinal - 3751.05) * 0.225 + (3751.05 - 2826.65) * 0.15 + (2826.65 - 2259.2) * 0.075;
-            } else if (bonusFinal > 2826.65) {
-                impostoRenda = (bonusFinal - 2826.65) * 0.15 + (2826.65 - 2259.2) * 0.075;
-            } else if (bonusFinal > 2259.2) {
-                impostoRenda = (bonusFinal - 2259.2) * 0.075;
+            if (bonusFinal <= 2259.20) {
+                aliquota = 0; // Faixa 1: Zero
+            } else if (bonusFinal <= 2828.65) {
+                aliquota = 7.5 / 100; // Faixa 2: 7.5%
+            } else if (bonusFinal <= 3751.05) {
+                aliquota = 15 / 100; // Faixa 3: 15%
+            } else if (bonusFinal <= 4664.68) {
+                aliquota = 22.5 / 100; // Faixa 4: 22.5%
+            } else {
+                aliquota = 27.5 / 100; // Faixa 5: 27.5%
             }
 
+            // Aplicar alíquota ao bônus final bruto
+            impostoRenda = bonusFinal * aliquota;
+
+            // Cálculo do bônus líquido
             const bonusLiquido = bonusFinal - impostoRenda;
 
             // Exibindo os resultados
@@ -45,6 +54,7 @@
                 <p><strong>Bônus Total (5,61% do salário anual):</strong> R$ ${bonusTotal.toFixed(2)}</p>
                 <p><strong>Frequência Ajustada:</strong> ${frequencia}%</p>
                 <p><strong>Bônus Final Bruto:</strong> R$ ${bonusFinal.toFixed(2)}</p>
+                <p><strong>Alíquota IR:</strong> ${(aliquota * 100).toFixed(2)}%</p>
                 <p><strong>Imposto de Renda Descontado:</strong> R$ ${impostoRenda.toFixed(2)}</p>
                 <p><strong>Bônus Final Líquido:</strong> R$ ${bonusLiquido.toFixed(2)}</p>
             `;
