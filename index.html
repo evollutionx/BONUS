@@ -37,22 +37,26 @@
     </script>
 </head>
 <body class="bg-light">
-    <div class="container py-5" style="width: 600px;">
-        <h1 class="text-center mb-4">Cálculo de Bônus Anual - sem os descontos</h1>
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <form onsubmit="event.preventDefault(); calcularBonus();">
-                    <div class="mb-3">
-                        <label for="salarioMensal" class="form-label">Salário Mensal (R$):</label>
-                        <input type="number" step="0.01" class="form-control" id="salarioMensal" placeholder="Exemplo: 3726.66" required>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-12">
+                <h1 class="text-center mb-4">Cálculo de Bônus Anual</h1>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form onsubmit="event.preventDefault(); calcularBonus();">
+                            <div class="mb-3">
+                                <label for="salarioMensal" class="form-label">Salário Mensal (R$):</label>
+                                <input type="number" step="0.01" class="form-control" id="salarioMensal" placeholder="Exemplo: 3726.66" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="frequencia" class="form-label">Frequência (%):</label>
+                                <input type="number" step="0.01" class="form-control" id="frequencia" placeholder="Exemplo: 100" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Calcular Bônus</button>
+                        </form>
+                        <div id="resultado" class="mt-4"></div>
                     </div>
-                    <div class="mb-3">
-                        <label for="frequencia" class="form-label">Frequência (%):</label>
-                        <input type="number" step="0.01" class="form-control" id="frequencia" placeholder="Exemplo: 100" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Calcular Bônus</button>
-                </form>
-                <div id="resultado" class="mt-4"></div>
+                </div>
             </div>
         </div>
     </div>
