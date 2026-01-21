@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cálculo de Bônus Anual - SAP 2023</title>
+    <title>Cálculo de Bônus Anual - SAP 2024</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .header-text {
             font-size: 1.2rem;
@@ -21,100 +22,238 @@
         }
         .result-section {
             background-color: #e9ecef;
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 8px;
             margin-top: 1rem;
+            border-left: 4px solid #0d6efd;
         }
         .result-section p {
             margin: 0.5rem 0;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .result-section p:last-child {
+            border-bottom: none;
+        }
+        .bonus-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #198754;
+        }
+        .formula-section {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .page-title {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .year-badge {
+            background-color: #198754;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
         }
     </style>
-    <script>
-        function calcularBonus() {
-            const salarioMensal = parseFloat(document.getElementById("salarioMensal").value);
-            const frequencia = parseFloat(document.getElementById("frequencia").value);
-            const bonusPercentual = 5.61 / 100; // 5,61%
-
-            if (isNaN(salarioMensal) || isNaN(frequencia) || salarioMensal <= 0 || frequencia <= 0) {
-                alert("Por favor, insira valores válidos para o salário e a frequência.");
-                return;
-            }
-
-            // Cálculo do salário anual
-            const salarioAnual = salarioMensal * 12;
-
-            // Cálculo do bônus total
-            const bonusTotal = salarioAnual * bonusPercentual;
-
-            // Cálculo do bônus ajustado pela frequência
-            const bonusFinal = (bonusTotal * frequencia) / 100;
-
-            // Determinar o imposto de renda com base na faixa do bônus final
-            let impostoRenda = 0;
-            let aliquota = 0;
-
-            if (bonusFinal <= 2259.20) {
-                aliquota = 0; // Faixa 1: Zero
-            } else if (bonusFinal <= 2828.65) {
-                aliquota = 7.5 / 100; // Faixa 2: 7.5%
-            } else if (bonusFinal <= 3751.05) {
-                aliquota = 15 / 100; // Faixa 3: 15%
-            } else if (bonusFinal <= 4664.68) {
-                aliquota = 22.5 / 100; // Faixa 4: 22.5%
-            } else {
-                aliquota = 27.5 / 100; // Faixa 5: 27.5%
-            }
-
-            // Aplicar alíquota ao bônus final bruto
-            impostoRenda = bonusFinal * aliquota;
-
-            // Cálculo do bônus líquido
-            const bonusLiquido = bonusFinal - impostoRenda;
-
-            // Exibindo os resultados
-            document.getElementById("resultado").innerHTML = `
-                <div class="result-section">
-                    <p><strong>Salário Mensal:</strong> R$ ${salarioMensal.toFixed(2)}</p>
-                    <p><strong>Salário Anual:</strong> R$ ${salarioAnual.toFixed(2)}</p>
-                    <p><strong>Bônus Total (5,61% do salário anual):</strong> R$ ${bonusTotal.toFixed(2)}</p>
-                    <p><strong>Frequência Ajustada:</strong> ${frequencia}%</p>
-                    <p><strong>Bônus Final Bruto:</strong> R$ ${bonusFinal.toFixed(2)}</p>
-                    <p><strong>Alíquota IR:</strong> ${(aliquota * 100).toFixed(2)}%</p>
-                    <p><strong>Imposto de Renda Descontado:</strong> R$ ${impostoRenda.toFixed(2)}</p>
-                    <p class="text-success"><strong>Bônus Final Líquido:</strong> R$ ${bonusLiquido.toFixed(2)}</p>
-                </div>
-            `;
-        }
-    </script>
 </head>
 <body>
     <div class="container py-5">
         <div class="text-center mb-4">
-            <h1 class="mb-1">Cálculo de Bônus Anual</h1>
-            <p class="header-text">Secretaria de Administração Penitenciária - Exercício 2023</p>
+            <h1 class="page-title">Cálculo de Bônus Anual</h1>
+            <p class="header-text">Secretaria de Administração Penitenciária</p>
+            <div class="d-flex justify-content-center align-items-center mt-2">
+                <span class="year-badge me-2">2024</span>
+                <span>Percentual deste ano: <strong>85,18%</strong></span>
+            </div>
         </div>
+        
         <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-8 col-12">
+            <div class="col-lg-8 col-md-10 col-12">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Simulação do Bônus</h5>
-                        <form onsubmit="event.preventDefault(); calcularBonus();">
-                            <div class="mb-3">
-                                <label for="salarioMensal" class="form-label">Salário Mensal (R$):</label>
-                                <input type="number" step="0.01" class="form-control" id="salarioMensal" placeholder="Exemplo: 3726.66" required>
+                        <h5 class="card-title text-center mb-4">Simulação do Bônus</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form id="bonusForm">
+                                    <div class="mb-3">
+                                        <label for="salarioMensal" class="form-label">Salário Mensal (R$):</label>
+                                        <input type="number" step="0.01" class="form-control" id="salarioMensal" value="3600" placeholder="Exemplo: 3600.00" required>
+                                        <div class="form-text">Salário mensal do exercício</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="ausencias" class="form-label">Ausências (dias):</label>
+                                        <input type="number" step="0.01" class="form-control" id="ausencias" value="0" placeholder="Exemplo: 10" required>
+                                        <div class="form-text">Total de dias de ausência no ano</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="coeficienteBR" class="form-label">Coeficiente BR (%):</label>
+                                        <input type="number" step="0.01" class="form-control" id="coeficienteBR" value="8.34" placeholder="Exemplo: 8.34" required>
+                                        <div class="form-text">Percentual do coeficiente BR</div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="iacm" class="form-label">IACM (%):</label>
+                                        <input type="number" step="0.01" class="form-control" id="iacm" value="85.18" placeholder="Exemplo: 85.18" required>
+                                        <div class="form-text">Índice deste ano (2024): 85,18%</div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary w-100">Calcular Bônus</button>
+                                </form>
                             </div>
-                            <div class="mb-3">
-                                <label for="frequencia" class="form-label">Frequência (%):</label>
-                                <input type="number" step="0.01" class="form-control" id="frequencia" placeholder="Exemplo: 100" required>
+                            
+                            <div class="col-md-6">
+                                <div class="formula-section">
+                                    <h6 class="fw-bold">Fórmula de Cálculo:</h6>
+                                    <p>SE(Dias Efetivos ≥ 244, então:</p>
+                                    <p class="ms-3">(Salário × 13) × Coeficiente BR × IACM × (Dias Efetivos / 366)</p>
+                                    <p>senão: 0)</p>
+                                    <hr>
+                                    <p><strong>Onde:</strong></p>
+                                    <p>• Dias Efetivos = 366 - Ausências</p>
+                                    <p>• Coeficiente BR = 8,34% (0,0834)</p>
+                                    <p>• IACM 2024 = 85,18% (0,8518)</p>
+                                    <p>• 13 = Referente ao 13º salário</p>
+                                </div>
+                                
+                                <div id="resultado" class="mt-3"></div>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Calcular Bônus</button>
-                        </form>
-                        <div id="resultado" class="mt-4"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <h6 class="card-title">Exemplo da sua planilha:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Valor</th>
+                                        <th>Descrição</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Salário Mensal</td>
+                                        <td>R$ 3.600,00</td>
+                                        <td>Salário mensal do exercício</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Coeficiente BR</td>
+                                        <td>8,34%</td>
+                                        <td>Percentual do coeficiente</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IACM 2024</td>
+                                        <td>85,18%</td>
+                                        <td>Percentual deste ano</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ausências</td>
+                                        <td>0</td>
+                                        <td>Dias de ausência</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Efetivo Exercício</td>
+                                        <td>366</td>
+                                        <td>Dias do ano (2024 é bissexto)</td>
+                                    </tr>
+                                    <tr class="table-success">
+                                        <td><strong>Bonificação</strong></td>
+                                        <td><strong>R$ 3.324,68</strong></td>
+                                        <td>Resultado do cálculo</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.getElementById('bonusForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            calcularBonus();
+        });
+
+        function calcularBonus() {
+            // Obter valores dos campos
+            const salarioMensal = parseFloat(document.getElementById("salarioMensal").value);
+            const ausencias = parseFloat(document.getElementById("ausencias").value);
+            const coeficienteBR = parseFloat(document.getElementById("coeficienteBR").value) / 100;
+            const iacm = parseFloat(document.getElementById("iacm").value) / 100;
+            
+            // Validação dos valores
+            if (isNaN(salarioMensal) || isNaN(ausencias) || isNaN(coeficienteBR) || isNaN(iacm)) {
+                alert("Por favor, insira valores válidos em todos os campos.");
+                return;
+            }
+            
+            if (salarioMensal <= 0 || ausencias < 0) {
+                alert("Por favor, insira valores válidos (salário > 0, ausências >= 0).");
+                return;
+            }
+            
+            // Cálculos base
+            const diasEfetivos = 366 - ausencias; // 2024 é ano bissexto
+            const salarioAnual = salarioMensal * 13; // Considera 13º salário
+            
+            // Aplicar a fórmula do Excel: =SE(B5>=244;((B1*13)*B2*B3*(B5/366));0)
+            // Onde: B5 = diasEfetivos, B1 = salarioMensal, B2 = coeficienteBR, B3 = iacm
+            
+            let bonus = 0;
+            
+            if (diasEfetivos >= 244) {
+                bonus = salarioAnual * coeficienteBR * iacm * (diasEfetivos / 366);
+            } else {
+                bonus = 0;
+            }
+            
+            // Exibindo os resultados
+            document.getElementById("resultado").innerHTML = `
+                <div class="result-section">
+                    <p><strong>Salário Mensal:</strong> R$ ${salarioMensal.toFixed(2).replace('.', ',')}</p>
+                    <p><strong>Salário Anual (13 meses):</strong> R$ ${salarioAnual.toFixed(2).replace('.', ',')}</p>
+                    <p><strong>Dias Efetivos (366 - Ausências):</strong> ${diasEfetivos} dias</p>
+                    <p><strong>Coeficiente BR:</strong> ${(coeficienteBR * 100).toFixed(2).replace('.', ',')}%</p>
+                    <p><strong>IACM 2024:</strong> ${(iacm * 100).toFixed(2).replace('.', ',')}%</p>
+                    <p><strong>Resultado da fórmula:</strong> ${diasEfetivos >= 244 ? 'Aprovado' : 'Não aprovado (menos de 244 dias efetivos)'}</p>
+                    <hr>
+                    <p class="bonus-value text-center">Bônus Calculado: R$ ${bonus.toFixed(2).replace('.', ',')}</p>
+                    <div class="text-center mt-2">
+                        <button onclick="copiarResultado()" class="btn btn-sm btn-outline-secondary">Copiar Valor</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function copiarResultado() {
+            const resultadoTexto = document.querySelector('.bonus-value').textContent;
+            navigator.clipboard.writeText(resultadoTexto.replace('Bônus Calculado: ', '')).then(() => {
+                alert('Valor copiado para a área de transferência!');
+            });
+        }
+        
+        // Calcular automaticamente ao carregar a página com os valores padrão
+        document.addEventListener('DOMContentLoaded', function() {
+            calcularBonus();
+        });
+    </script>
 </body>
 </html>
